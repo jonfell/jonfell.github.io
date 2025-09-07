@@ -1,0 +1,158 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Materials Engineer Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: #003087;
+            color: white;
+            text-align: center;
+            padding: 2em;
+        }
+        nav {
+            background: #333;
+            padding: 1em;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 1.5em;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .project {
+            margin-bottom: 2em;
+        }
+        .project img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .project a {
+            color: #003087;
+            text-decoration: none;
+        }
+        .project a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 1em;
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Name</h1>
+        <p>Materials Engineer for Aerospace Innovation</p>
+    </header>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="section" id="about">
+        <h2>About Me</h2>
+        <p>B.S. in Materials Engineering from [Your University], specializing in aerospace materials like composites and high-temperature alloys. Passionate about advancing space exploration through durable, innovative materials.</p>
+        <img src="images/headshot.jpg" alt="Your Headshot" style="max-width: 200px;">
+    </div>
+    <div class="section" id="projects">
+        <h2>Projects</h2>
+        <div class="project">
+            <h3>Lightweight Composite for Rocket Nozzles</h3>
+            <p>Developed a carbon-fiber composite, improving thermal resistance by 15% under simulated launch conditions.</p>
+            <img src="images/nozzle_composite.jpg" alt="Composite Sample">
+            <p><a href="pdfs/nozzle_report.pdf" target="_blank">View Test Report (PDF)</a></p>
+        </div>
+        <div class="project">
+            <h3>Titanium Alloy Optimization</h3>
+            <p>Enhanced yield strength by 10% through heat treatment, targeted for SpaceX Starship components.</p>
+            <img src="images/titanium_sample.jpg" alt="Titanium Alloy">
+            <p><a href="pdfs/titanium_report.pdf" target="_blank">View Analysis Report (PDF)</a></p>
+        </div>
+        <div class="project">
+            <h3>Failure Analysis of Satellite Shielding</h3>
+            <p>Analyzed material degradation in low-Earth orbit, recommending polymer upgrades.</p>
+            <img src="images/sem_image.jpg" alt="SEM Image">
+            <p><a href="pdfs/shielding_analysis.pdf" target="_blank">View Full Analysis (PDF)</a></p>
+        </div>
+    </div>
+    <div class="section" id="resume">
+        <h2>Resume</h2>
+        <p>Download my full resume for detailed experience and skills.</p>
+        <p><a href="pdfs/resume.pdf" target="_blank">Download Resume (PDF)</a></p>
+    </div>
+    <div class="section" id="contact">
+        <h2>Contact</h2>
+        <p>Reach out for opportunities in aerospace materials engineering.</p>
+        <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
+    </div>
+    <footer>
+        <p>&copy; 2025 Your Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>
