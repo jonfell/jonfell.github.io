@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,18 +8,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav>
+        <div class="main-nav">
+            <a href="#about">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="#publications">Publications</a>
+            <a href="#resume">Resume</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
     <header>
         <h1>Jon Ell</h1>
         <p>Test Design & Materials Engineer</p>
     </header>
-    <nav>
-        <a href="#about">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="#publications">Publications</a>
-        <a href="#resume">Resume</a>
-        <a href="#contact">Contact</a>
-    </nav>     
-<div class="section" id="about">
+    <div class="section" id="about">
         <h2>About Me</h2>
         <div class="about-content">
             <img src="Image/headshot.png" alt="Your Headshot" class="about-image">
@@ -71,34 +34,34 @@
                 </ul>
             </div>
         </div>
-    </div>        
-        <div class="section">
+    </div>
+    <div class="section">
         <h2>Projects</h2>
-    <p><a href="projects.html" class="project-link">View My Projects</a></p>
-</div>
+        <p><a href="projects.html" class="project-link">View My Projects</a></p>
+    </div>
     <div class="section" id="publications">
         <h2>Publications</h2>
-         <div class="publication">
+        <div class="publication">
             <h3>Making ultrastrong steel tough by grain-boundary delamination</h3>
             <p>Published in <i>Science</i></p>
             <p><a href="PDFs/Making ultrastrong steel tough by grain-boundary delamination.pdf" target="_blank">View Publication (PDF)</a></p>
         </div>
-         <div class="publication">
+        <div class="publication">
             <h3>Cryoforged nanotwinned titanium with ultrahigh strength and ductility</h3>
             <p>Published in <i>Science</i>, 2021</p>
             <p><a href="PDFs/Cryoforged nanotwinned titanium with ultrahigh strength and ductility.pdf" target="_blank">View Publication (PDF)</a></p>
         </div>
-            <div class="publication">
+        <div class="publication">
             <h3>Strong and ductile FeNiCoAl-based high-entropy alloys for cryogenic to elevated temperature multifunctional applications</h3>
             <p>Published in <i>Acta Materialia</i>, 2022</p>
             <p><a href="PDFs/Strong and ductile FeNiCoAl-based high-entropy alloys for cryogenic to elevated temperature multifunctional applications.pdf" target="_blank">View Publication (PDF)</a></p>
         </div>
-         <div class="publication">
+        <div class="publication">
             <h3>Compressive vs. tensile yield and fracture toughness behavior of a body-centered cubic refractory high-entropy superalloy Alo.5Nb1.25 Ta1.25 TiZr at temperatures from ambient to 1200°C</h3>
             <p>Published in <i>Materials Science and Engineering</i>, 2023</p>
             <p><a href="PDFs/Compressive vs. tensile yield and fracture toughness behavior of a body-centered cubic refractory high-entropy superalloy Alo.5Nb1.25 Ta1.25 TiZr at temperatures from ambient to 1200°C.pdf" target="_blank">View Publication (PDF)</a></p>
         </div>
-          <div class="publication">
+        <div class="publication">
             <h3>X-ray tomography study on the crushing strength and irradiation behaviour of dedicated tristructural isotropic nuclear fuel particles at 1000 °C</h3>
             <p>Published in <i>Journal of Nuclear Materials</i>, 2023</p>
             <p><a href="PDFs/X-ray tomography study on the crushing strength and irradiation behaviour of dedicated tristructural isotropic nuclear fuel particles at 1000 °C.pdf" target="_blank">View Publication (PDF)</a></p>
@@ -123,7 +86,7 @@
             <p>Published in <i>Composites Part B: Engineering</i>, 2024</p>
             <p><a href="PDFs/Full-field characterisation of oxide-oxide ceramic-matrix composites using X-ray computed micro-tomography and digital volume correlation under load at high temperatures.pdf" target="_blank">View Publication (PDF)</a></p>
         </div>
-         <div class="publication">
+        <div class="publication">
             <h3>High-temperature damage-tolerance of coextruded, bioinspired (“nacre-like”), alumina nickel compliant-phase ceramics</h3>
             <p>Published in <i>Acta Materialia</i>, 2023</p>
             <p><a href="PDFs/High-temperature damage-tolerance of coextruded, bioinspired (“nacre-like”), alumina nickel compliant-phase ceramics.pdf" target="_blank">View Publication (PDF)</a></p>
@@ -146,5 +109,37 @@
     <footer>
         <p>&copy; 2025 Jon Ell. All rights reserved.</p>
     </footer>
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
 </body>
 </html>
