@@ -5,7 +5,7 @@ body {
     background: #1f2229;
     color: #e0e0e0;
     overflow-x: hidden;
-    padding-top: 120px; /* Increased to accommodate two-row nav */
+    padding-top: 100px; /* Adjusted to clear fixed nav across all pages */
     line-height: 1.7;
     font-weight: 400;
 }
@@ -14,7 +14,7 @@ nav {
     background: rgba(31, 34, 41, 0.9);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    padding: 1em;
+    padding: 0.6em; /* Tightened from 1em */
     text-align: center;
     position: fixed;
     top: 0;
@@ -27,25 +27,25 @@ nav {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 1.8em;
+    gap: 1em; /* Tightened from 1.8em */
 }
 
 .main-nav {
-    margin-bottom: 0.8em; /* Space between main and sub nav */
+    margin-bottom: 0.4em; /* Tightened from 0.8em */
 }
 
 .main-nav a, .sub-nav a {
     color: #e0e0e0;
     text-decoration: none;
     font-weight: 600;
-    font-size: 1.3em;
-    padding: 0.6em 1.2em;
+    font-size: 1.1em; /* Reduced from 1.3em */
+    padding: 0.4em 0.8em; /* Reduced from 0.6em 1.2em */
     border-radius: 8px;
     transition: color 0.3s ease, transform 0.3s ease, background 0.3s ease;
 }
 
 .sub-nav a {
-    font-size: 1.1em; /* Slightly smaller for hierarchy */
+    font-size: 0.95em; /* Reduced from 1.1em */
 }
 
 .main-nav a:hover, .sub-nav a:hover {
@@ -58,12 +58,12 @@ header {
     background: linear-gradient(135deg, #2a2d37, #3b3f4e);
     color: #ffffff;
     text-align: center;
-    padding: 2em;
+    padding: 1.5em; /* Slightly reduced from 2em for less vertical space */
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    margin: 20px auto;
+    margin: 1em auto; /* Reduced from 20px to prevent excessive gap */
     max-width: 1100px;
-    animation: fadeIn 1.2s ease-out;
+    position: relative;
 }
 
 header h1 {
@@ -82,8 +82,8 @@ header p {
 
 .section {
     max-width: 1100px;
-    margin: 3em auto;
-    padding: 2.5em;
+    margin: 2em auto; /* Reduced from 3em to tighten spacing */
+    padding: 2em; /* Reduced from 2.5em for less vertical space */
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -107,8 +107,8 @@ header p {
 }
 
 .project, .publication {
-    margin-bottom: 2.5em;
-    padding: 1.8em;
+    margin-bottom: 2em; /* Reduced from 2.5em */
+    padding: 1.5em; /* Reduced from 1.8em */
     background: rgba(255, 255, 255, 0.08);
     border-radius: 10px;
     transition: background 0.3s ease, transform 0.3s ease;
@@ -125,7 +125,7 @@ header p {
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    margin: 1.5em 0;
+    margin: 1em 0; /* Reduced from 1.5em */
 }
 
 .project img:hover, .project-video:hover {
@@ -151,7 +151,7 @@ footer {
     background: linear-gradient(135deg, #2a2d37, #3b3f4e);
     color: #ffffff;
     border-radius: 12px 12px 0 0;
-    margin-top: 3em;
+    margin-top: 2em; /* Reduced from 3em */
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -180,7 +180,7 @@ footer p {
 .about-content {
     display: flex;
     align-items: flex-start;
-    gap: 3em;
+    gap: 2em; /* Reduced from 3em */
 }
 
 .about-image {
@@ -206,12 +206,12 @@ footer p {
 
 .about-text ul {
     list-style-type: disc;
-    margin: 1.5em 0;
+    margin: 1em 0; /* Reduced from 1.5em */
     padding-left: 2em;
 }
 
 .about-text li {
-    margin-bottom: 1em;
+    margin-bottom: 0.8em; /* Reduced from 1em */
     font-size: 1.2em;
     font-weight: 400;
 }
@@ -240,9 +240,25 @@ footer p {
 }
 
 @media (max-width: 768px) {
+    body {
+        padding-top: 120px; /* Adjusted for tablet nav height */
+    }
+    nav {
+        padding: 0.5em;
+    }
+    .main-nav, .sub-nav {
+        gap: 0.8em;
+    }
+    .main-nav a, .sub-nav a {
+        font-size: 1em;
+        padding: 0.4em 0.8em;
+    }
+    .sub-nav a {
+        font-size: 0.9em;
+    }
     header {
-        padding: 1.5em;
-        margin: 15px;
+        padding: 1.2em; /* Reduced from 1.5em */
+        margin: 0.8em; /* Reduced from 15px */
     }
     header h1 {
         font-size: 2.4em;
@@ -250,22 +266,9 @@ footer p {
     header p {
         font-size: 1.2em;
     }
-    nav {
-        padding: 0.8em;
-    }
-    .main-nav, .sub-nav {
-        gap: 1em;
-    }
-    .main-nav a, .sub-nav a {
-        font-size: 1.1em;
-        padding: 0.5em 1em;
-    }
-    .sub-nav a {
-        font-size: 1em;
-    }
     .section {
-        margin: 2em;
-        padding: 2em;
+        margin: 1.5em; /* Reduced from 2em */
+        padding: 1.5em; /* Reduced from 2em */
     }
     .section h2 {
         font-size: 2em;
@@ -273,7 +276,7 @@ footer p {
     .about-content {
         flex-direction: column;
         align-items: flex-start;
-        gap: 2em;
+        gap: 1.5em; /* Reduced from 2em */
     }
     .about-image {
         max-width: 100%;
@@ -287,9 +290,26 @@ footer p {
 }
 
 @media (max-width: 480px) {
+    body {
+        padding-top: 160px; /* Adjusted for stacked mobile nav */
+    }
+    nav {
+        padding: 0.4em;
+    }
+    .main-nav, .sub-nav {
+        flex-direction: column;
+        gap: 0.6em;
+    }
+    .main-nav a, .sub-nav a {
+        font-size: 0.9em;
+        padding: 0.3em 0.6em;
+    }
+    .sub-nav a {
+        font-size: 0.85em;
+    }
     header {
-        padding: 1em;
-        margin: 10px;
+        padding: 0.8em; /* Reduced from 1em */
+        margin: 0.5em; /* Reduced from 10px */
     }
     header h1 {
         font-size: 2em;
@@ -297,18 +317,8 @@ footer p {
     header p {
         font-size: 1em;
     }
-    nav {
-        padding: 0.6em;
-    }
-    .main-nav, .sub-nav {
-        flex-direction: column;
-        gap: 0.8em;
-    }
-    .main-nav a, .sub-nav a {
-        font-size: 0.95em;
-        padding: 0.3em 0.6em;
-    }
-    .sub-nav a {
-        font-size: 0.9em;
+    .section {
+        margin: 1em; /* Reduced from 1.5em */
+        padding: 1em; /* Reduced from 1.5em */
     }
 }
